@@ -1,0 +1,11 @@
+<%weigh_ins = [] %>
+<% weights = [] %>
+<% counter = 0 %>
+<% 1.times do   %>
+<% client = @client.weight_logs Date.today - counter %>
+<% weight = client.fetch("weight") %>
+<% if weight.first != nil %>
+<%= weight.first.fetch("weight") %>
+<% end %>
+<% counter = counter + 1 %>
+<% end  %>
