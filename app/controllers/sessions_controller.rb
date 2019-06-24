@@ -53,19 +53,43 @@ class SessionsController < ApplicationController
                      
                      else
                       
-                         
                         w = WeighIn.new 
-                        w.weight = 0.to_f
+                         
                         w.date = (Date.today - counter)
                         w.user_id = current_user.id
+                        
+                        #Check to see if there is a WeighIn before this one.
+                        
+                        most_recent_weigh_in = WeighIn.where("date < ? AND weight > ?" , Date.today - counter , 5) 
+                        
+                        
+                     
+                        
+                            if most_recent_weigh_in.present? 
+                        
+                        #if one exists before this one it will set it equal to the most recent weighIN
+                        
+                             w.weight = most_recent_weigh_in.first.weight 
+                       
+                        
+                            else 
+                        
+                        # if one does not exists before this date it will be 0.  
+                            w.weight = 0.0
+                            end
+                       
                         w.save 
                       end 
                       
-            elsif check_weigh_in_for_existance.present? && check_weigh_in_for_existance.first.weight == 0.0
+            # elsif check_weigh_in_for_existance.present? && check_weigh_in_for_existance.first.weight == 1.0
                      
-                        missed_weigh_in = WeighIn.find_by(:date => Date.today - counter)
-                        missed_weigh_in.weight = 1
-                        missed_weigh_in.save   
+            #             most_recent_weigh_in = WeighIn.where("date < ? AND weight > ?" , Date.today - counter , 5).first
+                        
+            #             missed_weigh_in = WeighIn.find_by(:date => Date.today - counter)
+                          
+                          
+            #             missed_weigh_in.weight = most_recent_weigh_in.weight
+            #             missed_weigh_in.save   
                       
             end
              counter = counter + 1 
