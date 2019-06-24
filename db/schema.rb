@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190619204447) do
+ActiveRecord::Schema.define(version: 20190621170420) do
 
   create_table "users", force: :cascade do |t|
     t.string   "provider",      null: false
@@ -23,6 +23,14 @@ ActiveRecord::Schema.define(version: 20190619204447) do
     t.integer  "expires_at"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+  end
+
+  create_table "weigh_ins", force: :cascade do |t|
+    t.float    "weight"
+    t.date     "date"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

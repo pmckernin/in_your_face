@@ -5,4 +5,5 @@ root to: 'pages#index'
 delete '/logout', to: 'sessions#destroy'
 
 get '/get_user_data', to: 'sessions#get_user_data'
+get "/api_call", to: "sessions#api_call"
 end
