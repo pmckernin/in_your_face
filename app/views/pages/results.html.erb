@@ -1,4 +1,13 @@
+<% most_recent_weight = 0 %>
+<% current_user.user_weigh_ins do |weigh_in|  %>
+<div>
+<%= weigh_in.date  %>
+<% if weigh_in.weight > 1 %>
+<% most_recent_weight = weigh_in.weight %>
+<%= most_recent_weight %>
+<% else %>
+<%= most_recent_weight %>
+<% end %>
 
-<%= WeighIn.pluck(:weight)  %>
-<%= WeighIn.pluck(:date)  %>
-
+</div>
+<% end  %>

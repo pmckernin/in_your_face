@@ -42,54 +42,22 @@ class SessionsController < ApplicationController
                    weight = client.fetch("weight") 
                       if weight.first != nil 
                         #if the weigh in exists, it will use the data from the api
+                        
                         w = WeighIn.new
                         w.weight = weight.first.fetch("weight").to_f
-            
                         w.date = weight.first.fetch("date")
                         w.user_id = current_user.id
                         w.save
                         
-                    
-                     
                      else
-                      
+                       
+                      #if the WeighIn never happened it is set to 0 
                         w = WeighIn.new 
-                         
                         w.date = (Date.today - counter)
                         w.user_id = current_user.id
-                        
-                        #Check to see if there is a WeighIn before this one.
-                        
-                        most_recent_weigh_in = WeighIn.where("date < ? AND weight > ?" , Date.today - counter , 5) 
-                        
-                        
-                     
-                        
-                            if most_recent_weigh_in.present? 
-                        
-                        #if one exists before this one it will set it equal to the most recent weighIN
-                        
-                             w.weight = most_recent_weigh_in.first.weight 
-                       
-                        
-                            else 
-                        
-                        # if one does not exists before this date it will be 0.  
-                            w.weight = 0.0
-                            end
-                       
+                        w.weight = 0.0
                         w.save 
                       end 
-                      
-            # elsif check_weigh_in_for_existance.present? && check_weigh_in_for_existance.first.weight == 1.0
-                     
-            #             most_recent_weigh_in = WeighIn.where("date < ? AND weight > ?" , Date.today - counter , 5).first
-                        
-            #             missed_weigh_in = WeighIn.find_by(:date => Date.today - counter)
-                          
-                          
-            #             missed_weigh_in.weight = most_recent_weigh_in.weight
-            #             missed_weigh_in.save   
                       
             end
              counter = counter + 1 
